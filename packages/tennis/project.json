@@ -1,0 +1,39 @@
+{
+  "root": "packages/tennis",
+  "sourceRoot": "packages/tennis/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/tennis",
+        "main": "packages/tennis/src/index.ts",
+        "tsConfig": "packages/tennis/tsconfig.app.json",
+        "assets": ["packages/tennis/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "tennis:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/tennis/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/tennis"],
+      "options": {
+        "jestConfig": "packages/tennis/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
