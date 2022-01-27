@@ -5,26 +5,26 @@ type WonBy = 'first' | 'second' | null;
 
 export class TennisGame {
   private scoresIdx: [number, number] = [0, 0];
-  private _wonBy: WonBy = null;
-  public wonBy(): WonBy {
-    return this._wonBy;
+  private wonBy: WonBy = null;
+  public getWonBy(): WonBy {
+    return this.wonBy;
   }
   public isOver(): boolean {
-    return this._wonBy !== null;
+    return this.wonBy !== null;
   }
-  public toString(): string {
+  public getScore(): string {
     return this.scoresIdx.map((idx) => tennisScores[idx]).join('-');
   }
   public firstPlayerScored() {
     if (tennisScores[this.scoresIdx[0]] == 40) {
-      this._wonBy = 'first';
+      this.wonBy = 'first';
       return;
     }
     this.scoresIdx[0]++;
   }
   public secondPlayerScored() {
     if (tennisScores[this.scoresIdx[1]] == 40) {
-      this._wonBy = 'first';
+      this.wonBy = 'second';
       return;
     }
     this.scoresIdx[1]++;
