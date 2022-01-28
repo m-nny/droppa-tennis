@@ -132,12 +132,12 @@ describe('TennisGame', () => {
 
       // second player scores and it becomes deuce
       game.secondPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce');
+      expect(game.getScore()).toEqual('40-40');
 
       // first player gains advantage
       game.firstPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('advantage-deuce');
+      expect(game.getScore()).toEqual('advantage-40');
 
       // first player wins
       game.firstPlayerScored();
@@ -168,12 +168,12 @@ describe('TennisGame', () => {
 
       // first player scores and it becomes deuce
       game.firstPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce');
+      expect(game.getScore()).toEqual('40-40');
 
       // second player gains advantage
       game.secondPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('deuce-advantage');
+      expect(game.getScore()).toEqual('40-advantage');
 
       // second player wins
       game.secondPlayerScored();
@@ -206,22 +206,22 @@ describe('TennisGame', () => {
 
       // second player scores and it becomes deuce
       game.secondPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce');
+      expect(game.getScore()).toEqual('40-40');
 
       // first player gains advantage
       game.firstPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('advantage-deuce');
+      expect(game.getScore()).toEqual('advantage-40');
 
       // second player moves to deuce
       game.secondPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('deuce-deuce');
+      expect(game.getScore()).toEqual('40-40');
 
       // first player gains advantage again
       game.firstPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('advantage-deuce');
+      expect(game.getScore()).toEqual('advantage-40');
 
       // first player wins
       game.firstPlayerScored();
@@ -252,12 +252,12 @@ describe('TennisGame', () => {
 
       // first player scores and it becomes deuce
       game.firstPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce');
+      expect(game.getScore()).toEqual('40-40');
 
       // second player gains advantage
       game.secondPlayerScored();
       expect(game.isOver()).toEqual(false);
-      expect(game.getScore()).toEqual('deuce-advantage');
+      expect(game.getScore()).toEqual('40-advantage');
 
       // second player wins
       game.secondPlayerScored();
@@ -293,22 +293,22 @@ describe('TennisGame', () => {
 
       // Tsitsipas wins the point
       game.secondPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce'); // TODO(m-nny): should be 40-40
+      expect(game.getScore()).toEqual('40-40');
       expect(game.isOver()).toEqual(false);
 
       // Tsitsipas wins the point
       game.secondPlayerScored();
-      expect(game.getScore()).toEqual('deuce-advantage'); // TODO(m-nny): should be 40-advantage
+      expect(game.getScore()).toEqual('40-advantage');
       expect(game.isOver()).toEqual(false);
 
       // Medvedev wins the point
       game.firstPlayerScored();
-      expect(game.getScore()).toEqual('deuce-deuce'); // TODO(m-nny): should be 40-40
+      expect(game.getScore()).toEqual('40-40');
       expect(game.isOver()).toEqual(false);
 
       // Medvedev wins the point
       game.firstPlayerScored();
-      expect(game.getScore()).toEqual('advantage-deuce'); // TODO(m-nny): should be advantage-40
+      expect(game.getScore()).toEqual('advantage-40');
       expect(game.isOver()).toEqual(false);
 
       // Medvedev wins the game

@@ -1,5 +1,5 @@
-const tennisScores = [0, 15, 30, 40, 'deuce', 'advantage', 'win'] as const;
-export type TennisScores = typeof tennisScores[number];
+const tennisScores = [0, 15, 30, 40, 'advantage', 'win'] as const;
+type TennisScores = typeof tennisScores[number];
 const getIdxFromTennisScore = (score: TennisScores): number =>
   tennisScores.findIndex((val) => val === score);
 
@@ -46,18 +46,22 @@ export class TennisGame {
     this.playerScored(this.player2, this.player1);
   }
   private playerScored(scoredPlayer: TennisPlayer, otherPlayer: TennisPlayer) {
-    if (scoredPlayer.score === 40 || scoredPlayer.score === 'advantage') {
+    if (
+      (scoredPlayer.score === 40 && otherPlayer.score < scoredPlayer.score) ||
+      scoredPlayer.score === 'advantage'
+    ) {
       scoredPlayer.score = 'win';
       return;
     }
     // deuce
     if (scoredPlayer.score === 30 && otherPlayer.score == 40) {
-      scoredPlayer.score = 'deuce';
-      otherPlayer.score = 'deuce';
+      scoredPlayer.score = 40;
+      otherPlayer.score = 40;
       return;
     }
+    // move back to deuce
     if (otherPlayer.score == 'advantage') {
-      otherPlayer.score = 'deuce';
+      otherPlayer.score = 40;
       return;
     }
     scoredPlayer.addScore();
