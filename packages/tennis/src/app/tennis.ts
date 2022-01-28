@@ -3,11 +3,9 @@ type TennisScores = typeof tennisScores[number];
 const getIdxFromTennisScore = (score: TennisScores): number =>
   tennisScores.findIndex((val) => val === score);
 
-const wonBy = ['first', 'second'] as const;
-type WonBy = typeof wonBy[number] | null;
-
 class TennisPlayer {
   private scoreIdx = 0;
+  constructor(public name: string) {}
 
   public get score(): TennisScores {
     return tennisScores[this.scoreIdx];
@@ -20,16 +18,28 @@ class TennisPlayer {
     return this.scoreIdx++;
   }
 }
+export type TennisGameOptions = { firstPlayer: string; secondPlayer: string };
+const defaultTennisGameOptions: TennisGameOptions = {
+  firstPlayer: 'first',
+  secondPlayer: 'second',
+};
 
 export class TennisGame {
-  private player1 = new TennisPlayer();
-  private player2 = new TennisPlayer();
-  public getWonBy(): WonBy {
+  private player1;
+  private player2;
+  public constructor({
+    firstPlayer,
+    secondPlayer,
+  }: TennisGameOptions = defaultTennisGameOptions) {
+    this.player1 = new TennisPlayer(firstPlayer);
+    this.player2 = new TennisPlayer(secondPlayer);
+  }
+  public getWonBy(): string | null {
     if (this.player1.score === 'win') {
-      return 'first';
+      return this.player1.name;
     }
     if (this.player2.score === 'win') {
-      return 'second';
+      return this.player2.name;
     }
     return null;
   }

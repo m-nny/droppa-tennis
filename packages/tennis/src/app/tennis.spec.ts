@@ -268,6 +268,12 @@ describe('TennisGame', () => {
   });
 
   describe('sample games', () => {
+    beforeEach(() => {
+      game = new TennisGame({
+        firstPlayer: 'Medvedev',
+        secondPlayer: 'Tsitsipas',
+      });
+    });
     it('Medvedev vs Tsitsipas', () => {
       // source https://www.perfect-tennis.com/tennis-scoring-rules/
 
@@ -314,7 +320,7 @@ describe('TennisGame', () => {
       // Medvedev wins the game
       game.firstPlayerScored();
       expect(game.isOver()).toEqual(true);
-      expect(game.getWonBy()).toEqual('first');
+      expect(game.getWonBy()).toEqual('Medvedev');
     });
   });
 });
