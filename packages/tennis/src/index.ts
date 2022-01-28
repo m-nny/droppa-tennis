@@ -1,4 +1,4 @@
-import { TennisGame } from './app/tennis';
+import { TennisGame } from './app/tennis-game';
 
 function runTestGame() {
   const game = new TennisGame();
