@@ -182,4 +182,139 @@ describe('TennisGame', () => {
       expect(game.getWonBy()).toEqual('second');
     });
   });
+  describe('win by scoring after advantage even after deuce is taken back', () => {
+    it('first player should win', () => {
+      // first player scores
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('15-0');
+
+      // first player scores
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('30-0');
+
+      // first player scores
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('40-0');
+
+      // second player scores
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('40-15');
+
+      // second player scores
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('40-30');
+
+      // second player scores and it becomes deuce
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('deuce-deuce');
+
+      // first player gains advantage
+      game.firstPlayerScored();
+      expect(game.isOver()).toEqual(false);
+      expect(game.getScore()).toEqual('advantage-deuce');
+
+      // second player moves to deuce
+      game.secondPlayerScored();
+      expect(game.isOver()).toEqual(false);
+      expect(game.getScore()).toEqual('deuce-deuce');
+
+      // first player gains advantage again
+      game.firstPlayerScored();
+      expect(game.isOver()).toEqual(false);
+      expect(game.getScore()).toEqual('advantage-deuce');
+
+      // first player wins
+      game.firstPlayerScored();
+
+      expect(game.isOver()).toEqual(true);
+      expect(game.getWonBy()).toEqual('first');
+    });
+    it('second player should win', () => {
+      // second player scores
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('0-15');
+
+      // second player scores
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('0-30');
+
+      // second player scores
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('0-40');
+
+      // first player scores
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('15-40');
+
+      // first player scores
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('30-40');
+
+      // first player scores and it becomes deuce
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('deuce-deuce');
+
+      // second player gains advantage
+      game.secondPlayerScored();
+      expect(game.isOver()).toEqual(false);
+      expect(game.getScore()).toEqual('deuce-advantage');
+
+      // second player wins
+      game.secondPlayerScored();
+
+      expect(game.isOver()).toEqual(true);
+      expect(game.getWonBy()).toEqual('second');
+    });
+  });
+
+  describe('sample games', () => {
+    it('Medvedev vs Tsitsipas', () => {
+      // source https://www.perfect-tennis.com/tennis-scoring-rules/
+
+      // Medvedev wins the point
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('15-0');
+
+      // Tsitsipas wins the point
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('15-15');
+
+      // Medvedev wins the point
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('30-15');
+
+      // Medvedev wins the point
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('40-15');
+
+      // Tsitsipas wins the point
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('40-30');
+
+      // Tsitsipas wins the point
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('deuce-deuce'); // TODO(m-nny): should be 40-40
+      expect(game.isOver()).toEqual(false);
+
+      // Tsitsipas wins the point
+      game.secondPlayerScored();
+      expect(game.getScore()).toEqual('deuce-advantage'); // TODO(m-nny): should be 40-advantage
+      expect(game.isOver()).toEqual(false);
+
+      // Medvedev wins the point
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('deuce-deuce'); // TODO(m-nny): should be 40-40
+      expect(game.isOver()).toEqual(false);
+
+      // Medvedev wins the point
+      game.firstPlayerScored();
+      expect(game.getScore()).toEqual('advantage-deuce'); // TODO(m-nny): should be advantage-40
+      expect(game.isOver()).toEqual(false);
+
+      // Medvedev wins the game
+      game.firstPlayerScored();
+      expect(game.isOver()).toEqual(true);
+      expect(game.getWonBy()).toEqual('first');
+    });
+  });
 });
