@@ -1,6 +1,9 @@
 const tennisScores = [0, 15, 30, 40, 'deuce', 'advantage'] as const;
 export type TennisScores = typeof tennisScores[number];
+const getIdxFromTennisScore = (score: TennisScores): number =>
+  tennisScores.findIndex((val) => val === score);
 
+const wonBy = ['first', 'second'] as const;
 type WonBy = 'first' | 'second' | null;
 
 export class TennisGame {
@@ -16,17 +19,42 @@ export class TennisGame {
     return this.scoresIdx.map((idx) => tennisScores[idx]).join('-');
   }
   public firstPlayerScored() {
-    if (tennisScores[this.scoresIdx[0]] == 40) {
-      this.wonBy = 'first';
-      return;
-    }
-    this.scoresIdx[0]++;
+    this.playerScored(0);
   }
   public secondPlayerScored() {
-    if (tennisScores[this.scoresIdx[1]] == 40) {
-      this.wonBy = 'second';
+    this.playerScored(1);
+  }
+  private playerScored(player: 0 | 1) {
+    const other = 1 - player;
+    if (
+      tennisScores[this.scoresIdx[player]] === 40 &&
+      0 <= tennisScores[this.scoresIdx[other]] &&
+      tennisScores[this.scoresIdx[other]] <= 30
+    ) {
+      this.wonBy = wonBy[player];
       return;
     }
-    this.scoresIdx[1]++;
+    console.log(this.getScore());
+
+    // deuce
+    if (
+      tennisScores[this.scoresIdx[player]] === 30 &&
+      tennisScores[this.scoresIdx[other]] === 40
+    ) {
+      this.scoresIdx[player] = getIdxFromTennisScore('deuce');
+      this.scoresIdx[other] = getIdxFromTennisScore('deuce');
+      return;
+    }
+
+    if (tennisScores[this.scoresIdx[player]] === 'advantage') {
+      this.wonBy = wonBy[player];
+      return;
+    }
+    if (tennisScores[this.scoresIdx[player]] === 'deuce') {
+      this.scoresIdx[other] = getIdxFromTennisScore('deuce');
+      return;
+    }
+
+    this.scoresIdx[player]++;
   }
 }
